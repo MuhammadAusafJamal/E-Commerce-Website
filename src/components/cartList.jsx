@@ -1,39 +1,21 @@
-import { fetchCart, deleteCarts } from "./userCartSlice.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import Button from "./button.jsx";
 
 export default function CartList() {
-    const dispatch = useDispatch();
-    const [data,setData] = useState();
-    // const cart = useSelector((state) => state.usercart);
+    const { carts, status, error } = useSelector((state) => state.cart);
+    console.log("cart------", carts)
 
-    const handleClick = async () => {
-        setData(await fetchCart())
-        // console.log('data', data)
-    }
 
     return (
         <div className="container">
             <div className="row">
                 <h1>Redux CRUD Cart App</h1>
             </div>
-            <div className="row">
-                <div className="two columns">
-                    <button
-                        onClick={() => (handleClick())}
-                        className="button-primary"
-                    >
-                        Load Carts
-                    </button>
-                </div>
-                <div className="two columns">
-                    <button className="button-primary">Add to cart</button>
-                </div>
-            </div>
+            <Button />
 
             {/* Handle loading and error states */}
-            {/* {status === 'loading' && <p>Loading...</p>}
-            {status === 'failed' && <p>Error: {error}</p>} */}
+            {status === 'loading' && <p>Loading...</p>}
+            {status === 'failed' && <p>Error: {error}</p>}
 
             <div className="row">
                 <table className="u-full-width">
@@ -48,9 +30,8 @@ export default function CartList() {
                     </thead>
                     <tbody>
                         {
-                            data && data.length > 0 ? (
-                                data.map(({ id, userId, products }) => {
-                                    // console.log('item ---', userId)
+                            carts && carts.length > 0 ? (
+                                carts.map(({ id, userId, products }) => {
                                     return (
                                         <tr key={id}>
                                             <td>{id}</td>
@@ -58,7 +39,7 @@ export default function CartList() {
                                             <td>{products.map(p => `Product Id: ${p.productId}`).join(', ')}</td>
                                             <td>
                                                 <button
-                                                    onClick={() => dispatch(deleteCarts(1))}
+                                                    // onClick={() => dispatch(deleteCarts(1))}
                                                     className="button-primary"
                                                 >
                                                     Delete Cart
@@ -66,7 +47,7 @@ export default function CartList() {
                                             </td>
                                             <td>
                                                 <button
-                                                    onClick={() => dispatch(deleteCarts(1))}
+                                                    // onClick={() => dispatch(deleteCarts())}
                                                     className="button-primary"
                                                 >
                                                     Edit Cart
@@ -80,6 +61,7 @@ export default function CartList() {
                                     <td colSpan="4">No carts available</td>
                                 </tr>
                             )
+
                         }
                     </tbody>
                 </table>
