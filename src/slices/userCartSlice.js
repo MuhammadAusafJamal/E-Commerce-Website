@@ -1,23 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
+import data from '../assets/data.js'
+
+// const fetchProducts = async () => {
+//     try {
+//         const response = await fetch(`https://66c4499eb026f3cc6ceeb0aa.mockapi.io/products`);
+//         const data = response.json();
+//         return data;
+//     } catch (error) {
+//         console.error('Error fetching cart data:', error);
+//     }
+// }
+
 
 
 
 const initialState = {
     cart: [],
-    items: await fetchProducts(),
+    items: data,
     totalQuantity: 0,
     totalPrice: 0,
 };
 
-const fetchProducts = async () => {
-    try {
-        const response = await fetch(`https://66c4499eb026f3cc6ceeb0aa.mockapi.io/products`);
-        const data = response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching cart data:', error);
-    }
-}
+
 
 const UserCartSlice = createSlice({
     name: "cart",
